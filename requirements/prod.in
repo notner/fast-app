@@ -1,0 +1,6 @@
+fastapi[standard]
+pandas
+
+flake8
+pytest
+setuptools

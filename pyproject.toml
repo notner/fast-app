@@ -1,0 +1,21 @@
+[build-system]
+requires = ['setuptools', 'setuptools-scm']
+build-backend = 'setuptools.build_meta'
+
+[project]
+name = 'fast-app'
+authors = [
+	{name='notner', email= 'notner@notner.not'},
+]
+description = 'Fast'
+dynamic = ['version']
+
+
+[project.scripts]
+dapp-cli = 'defaultapp.cli.cli:main'
+
+[tool.pytest.ini_options]
+cache_dir = '/tmp/cache_dir'
+testpaths = [
+    'src/myapp/tests/'
+]
