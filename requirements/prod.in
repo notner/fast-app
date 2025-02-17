@@ -14,3 +14,6 @@ pytest-tornasync
 pytest-trio
 pytest-twisted
 twisted
+
+# performance
+locust
