@@ -1,16 +1,16 @@
 # FastAPI/Pandas service
 
-
+Async Service for IMDB Movie data via Pandas Dataframes.
 
 ```code
 Tech Stack:
- * Python3 (FastAPI, SQLAlchemy, Pandas)
- * Databases:
-    - PostreSQL
+ * Python3
+    - FastAPI
+    - Pydantic
+    - Pandas
  * Cache:
     - Redis
 ```
-
 
 Warning
     **THIS PROJECT IS CURRENTLY IN ALPHA:**
@@ -21,12 +21,34 @@ Warning
 
 ## Design
 
-(WIP)
+![](docs/architecture.svg)
 
-## More Info
 
-IMDB dataset:
-    - https://datasets.imdbws.com/
+## Developer
+
+To setup for development, first run `make dev-setup`
+
+Next we need to download the .tsv data from IMDB (https://datasets.imdbws.com/), place files in `data` directory and then populate our database:
+```bash
+## Get Source Data
+# Supported IMDB File Names and location
+data/title.basics.tsv
+
+## Populate Redis
+# Start fixtures will launch docker/docker-compose.yml
+make start-fixtures
+# Start the FastAPI web process
+make run-web
+# Populate redis-database
+curl http://127.0.0.1:8000/movies/populate
+# check data
+curl http://127.0.0.1:8000/movie/Batman
+```
+Run tests:
+```bash
+make run-tests
+```
+
 
 
 
