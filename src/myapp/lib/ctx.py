@@ -3,6 +3,7 @@ import pickle
 import zlib
 from myapp.lib.redis_ import Redis
 from myapp.lib.cfg import AppCfg
+from myapp.lib.exc import ServerNotReady
 
 
 class AppCTX:
@@ -26,6 +27,10 @@ class AppCTX:
         if self._movie_df is None:
             rcli = await self.redis
             results = await rcli.get(self.cfg['server']['redis']['imdb_title_basic_key'])
+            if not results:
+                # get here we are in big trouble as no results
+                raise ServerNotReady('server not ready yet...')
+
             self._movie_df = pickle.loads(zlib.decompress(results))
         return self._movie_df
 
