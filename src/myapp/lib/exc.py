@@ -1,0 +1,2 @@
+class ServerNotReady(Exception):
+    pass
