@@ -6,7 +6,6 @@ dev-setup:
 	@pip install -r requirements/prod.in
 	@pip install -e .
 
-
 start-fixtures:
 	cd docker && docker compose up
 

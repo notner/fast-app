@@ -4,6 +4,7 @@ sqlalchemy[asyncio]
 redis
 tomli
 setuptools
+uvicorn
 
 # test stuff, move out oneday
 anyio
@@ -14,6 +15,7 @@ pytest-tornasync
 pytest-trio
 pytest-twisted
 twisted
+build
 
 # performance
 locust
