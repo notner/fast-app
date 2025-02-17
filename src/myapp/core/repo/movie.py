@@ -1,12 +1,11 @@
-import concurrent
 import asyncio
 import pandas as pd
 import pathlib
 import pickle
 import zlib
 
-
 from myapp.lib.ctx import AppCTX
+from myapp.lib.const import UPDATE_MOVIE_DATA
 
 
 # Read TSV file into DataFrame
@@ -16,23 +15,25 @@ def _get_movie_df_from_disk(ctx: AppCTX):
     df = pd.read_csv(
         title_info,
         delimiter='\t',
-        index_col='tconst',
+        index_col=['tconst'],
         # dtype={'isAdult': 'boolean', 'startYear': 'int', 'endYear': 'int'}
     )
+    # Index? all the fun
     return df
 
 
 async def populate_movie_db(ctx: AppCTX):
     loop = asyncio.get_running_loop()
-    with concurrent.futures.ProcessPoolExecutor() as pool:
-        df = await loop.run_in_executor(
-            pool, _get_movie_df_from_disk, ctx)
+    df = await loop.run_in_executor(None, _get_movie_df_from_disk, ctx)
 
     redis_cli = await ctx.redis
     await redis_cli.set(
         ctx.cfg['server']['redis']['imdb_title_basic_key'],
         zlib.compress(pickle.dumps(df))
     )
+
+    # Publish a message out via Redis pub/sub to alert on new data
+    await redis_cli.publish(UPDATE_MOVIE_DATA, 'New Data Available')
 
 
 async def get_movies(ctx: AppCTX, limit=100):

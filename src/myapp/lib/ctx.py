@@ -1,8 +1,8 @@
-
 import pickle
 import zlib
 from myapp.lib.redis_ import Redis
 from myapp.lib.cfg import AppCfg
+
 from myapp.lib.exc import ServerNotReady
 
 
@@ -30,9 +30,13 @@ class AppCTX:
             if not results:
                 # get here we are in big trouble as no results
                 raise ServerNotReady('server not ready yet...')
-
             self._movie_df = pickle.loads(zlib.decompress(results))
+
         return self._movie_df
+
+    async def expire_movie_df(self):
+        # TODO do we need mutex here?
+        self._movie_df = None
 
 
 def ctx_from_env(env: str) -> AppCTX:

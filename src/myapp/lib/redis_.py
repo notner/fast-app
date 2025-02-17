@@ -1,3 +1,4 @@
+import asyncio
 import redis.asyncio as redis
 
 
@@ -29,3 +30,18 @@ class Redis:
 
     async def get(self, key):
         return await self.client().get(key)
+
+
+# Async Reader for Channel
+async def reader(channel: redis.client.PubSub, callback):
+    while True:
+        try:
+            async with asyncio.timeout(10):
+                message = await channel.get_message(ignore_subscribe_messages=True)
+                if message is not None:
+                    await callback()
+                await asyncio.sleep(5)  # wait to check again
+        except (asyncio.TimeoutError):
+            # We only get here if something takes longer
+            # than the timeout in the loop
+            pass
