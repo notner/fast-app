@@ -35,8 +35,8 @@ class AppCTX:
         return self._movie_df
 
     async def expire_movie_df(self):
-        # TODO do we need mutex here?
         self._movie_df = None
+        await self.movie_df
 
 
 def ctx_from_env(env: str) -> AppCTX:
