@@ -21,7 +21,10 @@ def _get_movie_df_from_disk(ctx: AppCTX):
 async def populate_movie_db(ctx: AppCTX):
     df = _get_movie_df_from_disk(ctx)
     redis_cli = await ctx.redis
-    await redis_cli.set('key', zlib.compress(pickle.dumps(df)))
+    await redis_cli.set(
+        ctx.cfg['server']['redis']['imdb_title_basic_key'],
+        zlib.compress(pickle.dumps(df))
+    )
 
 
 async def get_movies(ctx: AppCTX, limit=100):
