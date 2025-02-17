@@ -3,7 +3,14 @@ pandas
 sqlalchemy[asyncio]
 redis
 tomli
+setuptools
 
+# test stuff, move out oneday
+anyio
 flake8
 pytest
-setuptools
+pytest-asyncio
+pytest-tornasync
+pytest-trio
+pytest-twisted
+twisted
