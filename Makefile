@@ -6,6 +6,13 @@ dev-setup:
 	@pip install -r requirements/prod.in
 	@pip install -e .
 
+
+start-fixtures:
+	cd docker && docker compose up
+
+stop-fixtures:
+	cd docker && docker compose down --volumes
+
 check-code:
 	@.virtualenv/bin/flake8 --ignore=W191,E501 src/
 	# @.virtualenv/bin/mypy src/

@@ -1,0 +1,21 @@
+services:
+
+  # REDIS
+  redis:
+    image: redis:latest
+    restart: always
+    ports:
+      - '6379:6379'
+    environment:
+      - REDIS_PASSWORD=my-password
+    volumes:
+      - redisdata:/root/redis
+      - ./redis.conf:/usr/local/etc/redis/redis.conf
+    healthcheck:
+      test: [ "CMD-SHELL", "redis-cli", "--raw", "incr", "ping" ]
+      interval: 5s
+      timeout: 5s
+      retries: 120
+
+volumes:
+  redisdata:
