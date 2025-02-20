@@ -1,10 +1,13 @@
+# core libs
 fastapi[standard]
 pandas
+notebook
 sqlalchemy[asyncio]
 redis
 tomli
 setuptools
 uvicorn
+pyiceberg[pandas]
 
 # test stuff, move out oneday
 anyio
@@ -16,6 +19,7 @@ pytest-trio
 pytest-twisted
 twisted
 build
+ipython
 
 # performance
 locust

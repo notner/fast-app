@@ -1,6 +1,7 @@
-# FastAPI/Pandas service
+# Async ELT Pipeline
 
-Async Service for IMDB Movie data via Pandas Dataframes.
+ELT Pipeline for ingesting raw data, scalable micro-service server apps for processing (via Kafka) and provide clean data downstream.
+
 
 ```code
 Tech Stack:
@@ -8,8 +9,13 @@ Tech Stack:
     - FastAPI
     - Pydantic
     - Pandas
- * Cache:
+    - Pyiceberg
+    - Pyspark
+ * DataLake
+    - Iceberg
+ * Databases:
     - Redis
+    - PSQL
 ```
 
 Warning
